@@ -1,0 +1,13 @@
+---
+title: "codebook"
+output: html_document
+---
+1. reading data from the test and train files, merge them into one data frame named mydf;
+2. read labels and features, filter mydf with features that are mean() and std(); 
+3. melt mydf with id variable= person and activity, make them a new mydf; 
+4. merge labels and features with the dataframe, and lowercase the activity.
+5. separate the feature name with subject and variable; 
+6. group by subject, variable and activity, summarize the data to average value. 
+7. write the new data frame down. 
+
+The result structure has 4 columns:  subject, activity, mean, std. 
