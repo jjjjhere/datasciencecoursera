@@ -1,0 +1,7 @@
+---
+title: "README"
+---
+Please run_analysis.R with the SAMSUNG dataset in the directory, the output file is resultdata.txt. 
+
+mydf: the source data that is manipulated through the code.
+result: the data frame file that contains the average of each variable for each activity and each subject.
