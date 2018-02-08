@@ -20,17 +20,15 @@ features <-  read.table("features.txt",header = F)
 labels <- read.table("activity_labels.txt",header = F)
 extract <- features[grep("mean\\()|std\\()",features$V2),]
 extract$V1 <- paste0("V",extract$V1)
-mydf <- data.frame(mydf[,extract$V1], "person"=mydf[,562],"activity"=mydf[,563])
+mydf <- data.frame(mydf[,extract$V1], "subject"=mydf[,562],"activity"=mydf[,563])
 
 # merging the data with label names and
-mydf <- melt(mydf, id.vars = c("person","activity"))
+mydf <- melt(mydf, id.vars = c("subject","activity"))
 mydf <- merge(mydf,labels,by.x = "activity",by.y = "V1")
 mydf <- merge(mydf, extract,by.x = "variable",by.y = "V1")
-mydf <- separate(mydf,V2.y,into = c("subject","variable","xyz"))
-mydf <- mydf[,2:7]
-colnames(mydf)[3] <- "activity"
-mydf$activity <- tolower(mydf$activity)
-mydf$activity <- gsub("_"," ",mydf$activity)
-mydf %>% select(subject, variable, xyz, activity, person, value)
+mydf <- separate(mydf,V2.y,into = c("gear","variable","xyz"))
+colnames(mydf)[4] <- "activityName"
+mydf$activityName <- tolower(mydf$activityName)
+mydf$activityName <- gsub("_"," ",mydf$activityName)
 result <- mydf%>% group_by(subject,variable,activity) %>% summarise(average = mean(value)) %>% spread(variable, average)
 write.table(result, file = "resultdata.txt",row.names = FALSE)
